@@ -24,7 +24,7 @@ SECRET_KEY = 'CHANGE_ME'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -80,8 +80,8 @@ DATABASES = {
         'NAME': 'sustainablegarden',
         'USER': 'sustainablegardenuser',
         'PASSWORD': 'password',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'HOST': 'psqlDb',
+        'PORT': 5432,
     }
 }
 
