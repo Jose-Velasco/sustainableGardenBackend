@@ -55,5 +55,5 @@ class SensorReadAll(APIView):
 
 
 class SensorReadingList(generics.ListAPIView):
-    queryset = SensorReading.objects.all()
+    queryset = SensorReading.objects.order_by("time_of_reading")
     serializer_class = SensorReadingSerializer

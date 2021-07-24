@@ -1,6 +1,11 @@
 version: "3.9"
 services:
     psqlDb:
+        volumes:
+            # Copies over the test data into the docker container
+            - ./garden.dump:/garden.dump/
+            # The scripts in the dir will run after the db has be initialized 
+            - ./db-init-scripts:/docker-entrypoint-initdb.d
         image: postgres:11.12
         ports: 
             - "5432:5432"
@@ -9,7 +14,7 @@ services:
             POSTGRES_PASSWORD: password
             POSTGRES_DB: sustainablegarden
 
-    backend:
+    api:
         build: .
         command: >
             bash -c "python manage.py migrate
@@ -23,3 +28,4 @@ services:
              DJANGO_SUPERUSER_USERNAME: admin
              DJANGO_SUPERUSER_PASSWORD: adminPassword
              DJANGO_SUPERUSER_EMAIL: admin@admin123.com
+        restart: unless-stopped

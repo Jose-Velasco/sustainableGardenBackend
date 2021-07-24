@@ -2,3 +2,4 @@
 /sustainableGardenBackend/db.sqlite3
 /.idea/*
 .vscode
+.dump
