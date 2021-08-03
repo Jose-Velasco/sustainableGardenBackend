@@ -4,8 +4,8 @@ services:
         volumes:
             # Copies over the test data into the docker container
             - ./garden.dump:/garden.dump/
-            # The scripts in the dir will run after the db has be initialized 
-            - ./db-init-scripts:/docker-entrypoint-initdb.d
+            # The scripts in the dir will run after the db has be initialized
+            # - ./db-init-scripts:/docker-entrypoint-initdb.d
         image: postgres:11.12
         ports: 
             - "5432:5432"
@@ -16,6 +16,9 @@ services:
 
     api:
         build: .
+        volumes: 
+            # see file-changes instantly (when developing)
+            - .:/usr/src/app
         command: >
             bash -c "python manage.py migrate
             && python manage.py createsuperuser --noinput
@@ -25,7 +28,8 @@ services:
         depends_on: 
             - psqlDb
         environment:
-             DJANGO_SUPERUSER_USERNAME: admin
-             DJANGO_SUPERUSER_PASSWORD: adminPassword
-             DJANGO_SUPERUSER_EMAIL: admin@admin123.com
+            DJANGO_SUPERUSER_USERNAME: admin
+            DJANGO_SUPERUSER_PASSWORD: adminPassword
+            DJANGO_SUPERUSER_EMAIL: admin@admin123.com
+            PYTHONUNBUFFERED: 1
         restart: unless-stopped
